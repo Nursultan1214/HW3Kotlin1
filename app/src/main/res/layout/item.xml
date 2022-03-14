@@ -4,17 +4,6 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ImageView
-        android:id="@+id/iv_background"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_width="120dp"
-        android:layout_marginStart="6dp"
-        android:layout_marginTop="6dp"
-        android:layout_height="120dp"/>
-
-
 
     <ImageView
         android:id="@+id/iv_photo"
@@ -25,5 +14,20 @@
         android:layout_marginStart="6dp"
         android:layout_marginTop="6dp"
         android:layout_height="120dp"/>
+
+    <ImageView
+        android:id="@+id/iv_background"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="120dp"
+        android:background="#514E4E"
+        android:layout_marginStart="6dp"
+        android:visibility="gone"
+        android:layout_marginTop="6dp"
+        android:layout_height="120dp"/>
+
+
+
 
 </FrameLayout>

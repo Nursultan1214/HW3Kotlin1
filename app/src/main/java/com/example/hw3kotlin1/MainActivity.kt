@@ -1,49 +1,94 @@
 package com.example.hw3kotlin1
 
-import android.content.Context
+import android.app.Activity
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.recyclerview.widget.RecyclerView
+import android.util.Log
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import com.example.hw3kotlin1.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-    private val listImage = arrayListOf<String>()
-    private val listBackground = arrayListOf<String>()
-    private val adapter by lazy {Adapter()}
+
+    private val list = arrayListOf<Int>()
+    private val listImage = arrayListOf<Int>()
+    private lateinit var binding: ActivityMainBinding
+    private lateinit var adapter : Adapter
+    private lateinit var resultLauncher: ActivityResultLauncher<Intent>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         addImage()
         rvInit()
+        registerForActivity()
+        fabClick()
+
+    }
+
+    private fun registerForActivity() {
+        resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+            result ->
+            if (result.resultCode == Activity.RESULT_OK){
+                Log.e("TAG", "registerForActivity: $result" )
+            }
+        }
+    }
+
+    private fun  fabClick() {
+        binding.fab.setOnClickListener{
+            openActivityResult()
+        }
+    }
+
+    private fun openActivityResult() {
+       Intent(this, MainActivity2::class.java).apply {
+           putExtra("image", listImage)
+           resultLauncher.launch(this)
+       }
     }
 
     private fun addImage(){
-        val image1 = "https://krasivosti.pro/uploads/posts/2021-07/1625891556_49-krasivosti-pro-p-kvadratnii-kot-koti-krasivo-foto-59.jpg"
-        val image2 = "https://krasivosti.pro/uploads/posts/2021-07/1625891518_11-krasivosti-pro-p-kvadratnii-kot-koti-krasivo-foto-12.jpg"
-        val image3 = "https://krasivosti.pro/uploads/posts/2021-07/1625891482_1-krasivosti-pro-p-kvadratnii-kot-koti-krasivo-foto-1.jpg"
-        val imageBack = "https://pbs.twimg.com/media/FNKiNYvXEAAN0Lh?format=png&name=900x900"
-        listImage.add(image1)
-        listImage.add(image2)
-        listImage.add(image3)
-        listImage.add(image1)
-        listImage.add(image2)
-        listImage.add(image3)
-        listImage.add(image1)
-        listImage.add(image2)
-        listImage.add(image3)
-        listImage.add(image2)
-        listImage.add(image3)
-        listImage.add(image1)
-        listImage.add(image2)
-        listImage.add(image3)
-        listImage.add(image3)
-        listBackground.add(imageBack)
-        listBackground.add(imageBack)
-        listBackground.add(imageBack)
+           list.add(R.drawable.googleisjdf)
+           list.add(R.drawable.googleisjdf)
+           list.add(R.drawable.googleisjdf)
+           list.add(R.drawable.googleisjdf)
+           list.add(R.drawable.googleisjdf)
+           list.add(R.drawable.googleisjdf)
+           list.add(R.drawable.googleisjdf)
+           list.add(R.drawable.googleisjdf)
+           list.add(R.drawable.googleisjdf)
+           list.add(R.drawable.googleisjdf)
+           list.add(R.drawable.googleisjdf)
+           list.add(R.drawable.googleisjdf)
+           list.add(R.drawable.googleisjdf)
+           list.add(R.drawable.googleisjdf)
+           list.add(R.drawable.googleisjdf)
+           list.add(R.drawable.googleisjdf)
+           list.add(R.drawable.googleisjdf)
+           list.add(R.drawable.googleisjdf)
+           list.add(R.drawable.googleisjdf)
+           list.add(R.drawable.googleisjdf)
+           list.add(R.drawable.googleisjdf)
+           list.add(R.drawable.googleisjdf)
+           list.add(R.drawable.googleisjdf)
+           list.add(R.drawable.googleisjdf)
+
     }
 
     fun rvInit(){
-        adapter.update(listImage, listBackground)
-        val rv = findViewById<RecyclerView>(R.id.rv_image)
-        rv.adapter = adapter
+       adapter = Adapter(object: Adapter.OnItemClick{
+           override fun onClick(image: Int) {
+               listImage.add(image)
+           }
+
+           override fun deleteClick(image: Int) {
+           }
+
+       })
+        adapter.setImage(list)
+        binding.rvImage.adapter = adapter
     }
 }
